@@ -1,8 +1,26 @@
 const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
+const mongoose = require('mongoose')
+// include url model
+const Url = require('./models/url')
 
 const port = 3000
+
+// connect mongoose with mongodb
+mongoose.connect('mongodb://localhost/url', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+
+const db = mongoose.connection
+
+// connect error
+db.on('error', () => {
+  console.log('mongodb error')
+})
+
+// connect success
+db.once('open', () => {
+  console.log('mongodb connect')
+})
 
 // serve static files
 app.use(express.static('public'))
