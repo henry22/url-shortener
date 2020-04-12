@@ -14,7 +14,7 @@ const port = 3000
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // connect mongoose with mongodb
-mongoose.connect('mongodb://localhost/url', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/url', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
@@ -104,4 +104,4 @@ app.get('/:shorten_url', (req, res) => {
   })
 })
 
-app.listen(port, () => console.log(`Server is listening on http://localhost:${port}`))
+app.listen(process.env.PORT || port, () => console.log(`Server is listening on http://localhost:${port}`))
