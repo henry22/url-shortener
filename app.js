@@ -4,8 +4,12 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 // include url model
 const Url = require('./models/url')
+const bodyParser = require('body-parser')
 
 const port = 3000
+
+// use body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // connect mongoose with mongodb
 mongoose.connect('mongodb://localhost/url', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
@@ -33,8 +37,12 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
-app.post('/:url', (req, res) => {
-  res.send('post url')
+app.post('/', (req, res) => {
+  const url = req.body.url
+
+  if (!url) {
+    return res.render('index', {error: 'Please provide a valid URL'})
+  }
 })
 
 app.get('/:shorten', (req, res) => {
