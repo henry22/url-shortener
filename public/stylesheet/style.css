@@ -1,0 +1,5 @@
+.fa-link::before {
+  background: -webkit-linear-gradient(45deg, #7FD1F1, #7FD1F1 50%, #E39B7A 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
