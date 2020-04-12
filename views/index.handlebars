@@ -1,8 +1,8 @@
 <div class="container d-flex flex-column justify-content-center vh-100">
-  <h1 class="text-center">URL Shortener</h1>
+  <h1 class="text-center mb-5">URL Shortener</h1>
   <i class="text-center fas fa-link fa-7x mb-5"></i>
   {{#if error}}
-  <div class="alert alert-danger fade show">
+  <div class="alert alert-danger fade show w-75 mx-auto">
     {{{error}}}
     <button type="button" class="close" data-dismiss="alert">
       <span>&times;</span>
@@ -18,14 +18,14 @@
       </a>
       <input type="hidden" name="shortUrl" id="shortUrl" class="form-control" value="{{{shortUrl}}}">
       <div class="btn-group" role="group" aria-label="button groups">
-        <button class="btn btn-info py-2" type="button" id="copy-btn" onclick="copyLink()">
+        <button class="btn btn-primary py-2" type="button" id="copy-btn" onclick="copyLink()">
           <strong>Copy</strong>
         </button>
         <a href="/" class="btn btn btn-secondary py-2"><strong>Back</strong></a>
       </div>
     </div>
     {{else}}
-    <div class="form-group w-100">
+    <div class="form-group w-75">
       <label for="url" class="sr-only"></label>
       <input type="url" name="url" id="url" class="form-control" placeholder="Input URL here" value="{{{originalUrl}}}">
     </div>
