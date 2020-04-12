@@ -83,8 +83,20 @@ app.post('/', async (req, res) => {
   }
 })
 
-app.get('/:shorten', (req, res) => {
-  res.render('index')
+app.get('/:shorten_url', (req, res) => {
+  const shortenUrl = req.params.shorten_url
+
+  Url.findOne({
+    shortenUrl: shortenUrl
+  }, (err, url) => {
+    if (err) throw new Error(err)
+
+    if (url) {
+      res.redirect(url.originalUrl)
+    } else {
+      res.redirect('/')
+    }
+  })
 })
 
 app.listen(port, () => console.log(`Server is listening on http://localhost:${port}`))
