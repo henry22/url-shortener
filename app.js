@@ -104,4 +104,4 @@ app.get('/:shorten_url', (req, res) => {
   })
 })
 
-app.listen(process.env.PORT || port, () => console.log(`Server is listening on http://localhost:${port}`))
+app.listen(process.env.PORT || port, () => console.log('App is running'))
