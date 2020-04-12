@@ -16,8 +16,9 @@
       <a href="{{{shortUrl}}}" target="_blank" class="d-block mb-3">
         {{{shortUrl}}}
       </a>
+      <input type="hidden" name="shortUrl" id="shortUrl" class="form-control" value="{{{shortUrl}}}">
       <div class="btn-group" role="group" aria-label="button groups">
-        <button class="btn btn-info py-2" type="button" id="copy-btn">
+        <button class="btn btn-info py-2" type="button" id="copy-btn" onclick="copyLink()">
           <strong>Copy</strong>
         </button>
         <a href="/" class="btn btn btn-secondary py-2"><strong>Back</strong></a>
