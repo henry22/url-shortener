@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 // include url model
 const Url = require('./models/url')
 const bodyParser = require('body-parser')
+const randomString = require('randomstring')
 
 const port = 3000
 
@@ -37,16 +38,53 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
-app.post('/', (req, res) => {
-  const url = req.body.url
+app.post('/', async (req, res) => {
+  const originalUrl = req.body.url
 
-  if (!url) {
-    return res.render('index', {error: 'Please provide a valid URL'})
+  if (!originalUrl) {
+    return res.render('index', {error: 'Please enter URL'})
+  }
+
+  try {
+    let url = await Url.findOne({
+      originalUrl: originalUrl
+    }).exec()
+
+    const origin = req.get('origin')
+    const shortUrl = randomString.generate({
+      length: 5,
+      charset: 'alphanumeric'
+    })
+
+    if (url) {
+      res.render('index', {
+        shortUrl: `${origin}/${url.shortenUrl}`,
+        originalUrl: url.originalUrl
+      })
+    } else {
+      const newUrl = new Url({
+        originalUrl: originalUrl,
+        shortenUrl: shortUrl
+      })
+
+      newUrl.save()
+        .then(url => {
+          res.render('index', {
+            shortUrl: `${origin}/${url.shortenUrl}`,
+            originalUrl: url.originalUrl
+          })
+        })
+        .catch(err => console.log(err))
+    }
+  } catch(err) {
+    if (err) throw new Error(err)
+
+    res.redirect('/')
   }
 })
 
 app.get('/:shorten', (req, res) => {
-  res.send('get shorten url')
+  res.render('index')
 })
 
 app.listen(port, () => console.log(`Server is listening on http://localhost:${port}`))

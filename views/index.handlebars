@@ -10,10 +10,25 @@
   </div>
   {{/if}}
   <form action="/" method="POST" class="w-75 mx-auto d-flex flex-column align-items-center">
+    {{#if shortUrl}}
+    <div class="mb-4">
+      <h4 class="success-msg">Success! Please use this link:</h4>
+      <a href="{{{shortUrl}}}" target="_blank" class="d-block mb-3">
+        {{{shortUrl}}}
+      </a>
+      <div class="btn-group" role="group" aria-label="button groups">
+        <button class="btn btn-info py-2" type="button" id="copy-btn">
+          <strong>Copy</strong>
+        </button>
+        <a href="/" class="btn btn btn-secondary py-2"><strong>Back</strong></a>
+      </div>
+    </div>
+    {{else}}
     <div class="form-group w-100">
       <label for="url" class="sr-only"></label>
-      <input type="url" name="url" id="url" class="form-control" placeholder="Input URL here">
+      <input type="url" name="url" id="url" class="form-control" placeholder="Input URL here" value="{{{originalUrl}}}">
     </div>
     <button class="btn btn-outline-primary w-50">Shorten</button>
+    {{/if}}
   </form>
 </div>
