@@ -41,6 +41,7 @@ app.get('/', (req, res) => {
 
 app.post('/', async (req, res) => {
   const originalUrl = req.body.url
+  let uniqueUrl = new Set()
 
   if (!originalUrl) {
     return res.render('index', {error: 'Please enter URL'})
@@ -53,10 +54,19 @@ app.post('/', async (req, res) => {
       }).exec()
 
       const origin = req.get('origin')
-      const shortUrl = randomString.generate({
+      let shortUrl = randomString.generate({
         length: 5,
         charset: 'alphanumeric'
       })
+
+      if(uniqueUrl.has(shortUrl)) {
+        shortUrl = randomString.generate({
+          length: 5,
+          charset: 'alphanumeric'
+        })
+      } else {
+        uniqueUrl.add(shortUrl)
+      }
 
       if (url) {
         res.render('index', {
